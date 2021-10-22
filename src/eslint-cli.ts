@@ -3,13 +3,6 @@ const fs = require('fs');
 
 import { EXTENSIONS_TO_LINT } from './constants';
 
-
-const ESLINT_TO_GITHUB_LEVELS = [
-  'notice',
-  'warning',
-  'failure'
-];
-
 export async function eslint(filesList: string[]) {
   const { CLIEngine } = (await import(
     path.join(process.cwd(), 'node_modules/eslint')
@@ -36,13 +29,13 @@ export async function eslint(filesList: string[]) {
     for (const msg of messages) {
       const {
         line,
-        severity,
         ruleId,
         message,
         endLine,
         column,
         endColumn
       } = msg;
+      console.log(`Lint message (${filename}): `, msg);
       if (annotations.length >= 50) {
         console.warn('Only showing the first 50 messages');
         break;
